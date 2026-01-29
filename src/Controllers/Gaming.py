@@ -448,6 +448,7 @@ class Gaming:
     def run(self, flag, events):
         self.draw_bg()
         self.draw_seedbank()
+        self.show_sunshine()
 
         self.add_counter()
 
@@ -504,7 +505,6 @@ class Gaming:
         self.plant_manager.add_counter()
 
         self.show_killing_counter()
-        self.show_sunshine()
         flag = self.check_end(flag)
         return flag
 
