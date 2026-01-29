@@ -2,8 +2,8 @@ import pygame
 import sys
 import random
 import os
-from src.Zombies.Zombie import *
-from src.Plants.Plant import *
+from Zombies.Zombie import *
+from Plants.Plant import *
 
 class PlantManager:
     def __init__(self, project_path, screen):
