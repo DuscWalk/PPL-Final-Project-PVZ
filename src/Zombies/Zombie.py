@@ -2,6 +2,9 @@ import pygame
 import os
 
 class Zombie:
+    """
+    普通僵尸，同时也是僵尸的父类
+    """
     def __init__(self, project_path, screen, hp, atk, speed, x, y, line):
         self.project_path = project_path
         self.screen = screen
@@ -14,7 +17,7 @@ class Zombie:
         self.line = line
         self.image_walk = {}
         self.image_eat = {}
-        self.state = "walk"
+        self.state = "walk" #有walk和eat两种状态
         self.counter = 0
         for i in range(1, 6):
             self.image_walk[i] = pygame.image.load(os.path.join(project_path, "image", "Zombies", "walk", f"zombie_move{i}.png")).convert_alpha()

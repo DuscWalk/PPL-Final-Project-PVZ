@@ -2,6 +2,10 @@ import os.path
 import pygame
 
 class Fade:
+    """
+    改变图片透明度，实现图片的淡入淡出
+    用于显示作者Logo
+    """
     def __init__(self, screen, alpha, fade_in, fade_speed, image):
         self.running = True
         self.screen = screen
@@ -49,6 +53,9 @@ class Fade:
 
 
 class Loading:
+    """
+    加载动画，主要通过计数器来切换贴图，实现草坪的滚动效果
+    """
     def __init__(self, screen, project_path):
         self.running = True
         self.screen = screen
@@ -83,6 +90,9 @@ class Loading:
 
 
 class Ready2Enter:
+    """
+    加载动画结束，用户可以通过点击按键进入游戏主界面
+    """
     def __init__(self, screen, project_path):
         self.running = True
         self.screen = screen

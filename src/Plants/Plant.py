@@ -3,6 +3,9 @@ import math
 import pygame
 
 class Plant:
+    """
+    植物的父类
+    """
     def __init__(self, project_path, screen, hp, atk, x, y, consumption, line):
         self.project_path = project_path
         self.screen = screen

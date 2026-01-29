@@ -1,8 +1,9 @@
 import pygame
 import sys
 import random
-from Zombies.Zombie import *
-from Plants.Plant import *
+import os
+from src.Zombies.Zombie import *
+from src.Plants.Plant import *
 
 class PlantManager:
     def __init__(self, project_path, screen):
@@ -24,6 +25,9 @@ class PlantManager:
         self.sunshine = 50
 
     def gen_sun(self):
+        """
+        每隔一定时间产生阳光掉落，初始x坐标与目标y坐标均随机
+        """
         if self.counter % 600 == 0:
             x = random.randint(60, self.screen.get_width() - 60)
             y = 80
@@ -43,6 +47,9 @@ class PlantManager:
                     self.suns.append(sun)
 
     def genFollower(self, x, y):
+        """
+        当植物卡槽被点击时，若阳光充足则产生贴图并跟随鼠标，否则播放阻塞的音效
+        """
         ret = None
         if 77 <= x <= 126 and 7 <= y <= 77:
             if  self.sunshine >= 100:
@@ -65,6 +72,9 @@ class PlantManager:
         return ret
 
     def pick_sun(self, x, y):
+        """
+        鼠标点击后，判断(x, y)的位置是否有阳光可以捡起
+        """
         w, h = self.for_moving["sun"].get_size()
         if self.suns:
             for sun in self.suns:
@@ -73,6 +83,9 @@ class PlantManager:
         return None
 
     def add_plant(self, pos):
+        """
+        在pos位置种植植物
+        """
         plant_x, plant_y, plant_line = pos[0], pos[1], pos[2]
         if self.next_plant == "peashooter":
             shooter = Peashooter(self.project_path, self.screen, 270, 20, plant_x, plant_y, 100, plant_line)
@@ -117,6 +130,9 @@ class ZombieManager:
         self.killed_zombies = 0
 
     def gen_zombie(self):
+        """
+        随机选取一行产生一只僵尸
+        """
         if (not self.counter % self.gen_frequency == 0) or self.generated_zombies >= self.total_zombies:
             return None
         line = random.randint(1, 5)
@@ -136,6 +152,9 @@ class ZombieManager:
 
 
 class Gaming:
+    """
+    游戏主体的主控类
+    """
     def __init__(self, screen, project_path, flag):
         self.screen = screen
         self.project_path = project_path
@@ -192,6 +211,9 @@ class Gaming:
         self.screen.blit(self.images["sunflower_packet"], (177, 7))
 
     def peashooters_shoot(self):
+        """
+        遍历每一棵豌豆射手，若所在行前方有僵尸，则每隔一段时间射出豌豆
+        """
         for peashooter in self.plant_manager.peashooters:
             peashooter.add_counter()
             flag = False
@@ -210,6 +232,9 @@ class Gaming:
                 peashooter.shooting = False
 
     def bullets_update(self):
+        """
+        检测豌豆其是否正在飞行、是否与僵尸发生碰撞、是否已经破裂或应该消失等，并更新位置或贴图
+        """
         for i in range(len(self.plant_manager.bullets) - 1, -1, -1):
             bullet = self.plant_manager.bullets[i]
             bullet.add_counter()
@@ -227,6 +252,9 @@ class Gaming:
                     del self.plant_manager.bullets[i]
 
     def plants_update(self):
+        """
+        若有植物死亡则应该移除
+        """
         for i in range(len(self.plant_manager.plants) - 1, -1, -1):
             plant = self.plant_manager.plants[i]
             if not plant.is_alive:
@@ -237,6 +265,9 @@ class Gaming:
                     self.plant_manager.sunflowers.remove(plant)
 
     def suns_update(self):
+        """
+        若有阳光收集完毕，则总阳光数应该增加
+        """
         for i in range(len(self.plant_manager.suns) - 1, -1, -1):
             sun = self.plant_manager.suns[i]
             if not sun.is_alive and (sun.x, sun.y) == (sun.target_x, sun.target_y):
@@ -246,6 +277,10 @@ class Gaming:
                 sun.move()
 
     def zombie_update(self):
+        """
+        判断僵尸是否正在行走或啃咬，以及其对应的贴图。
+        同时也要判断游戏胜负
+        """
         if not self.zombie_manager.zombies:
             return
         for i in range(len(self.zombie_manager.zombies) - 1, -1, -1):
@@ -292,6 +327,9 @@ class Gaming:
 
 
     def show_killing_counter(self):
+        """
+        显示出当前的 击杀数 / 总数
+        """
         BLACK = (0, 0, 0)
         font = pygame.font.SysFont(None, 36)
         text = f"{self.zombie_manager.killed_zombies} / {self.zombie_manager.total_zombies}"
@@ -307,6 +345,9 @@ class Gaming:
 
 
     def get_moneybag_position(self, x, y):
+        """
+        实现钱袋向屏幕中间平移，且移速渐缓的效果
+        """
         WIDTH, HEIGHT = 800, 600
         factor = 0.03
         img_rect = self.images["win"].get_rect()
@@ -322,6 +363,9 @@ class Gaming:
         return x, y
 
     def check_end(self, flag):
+        """
+        游戏结束
+        """
         if self.state == "Running":
             return flag
         if self.state == "Win":
@@ -344,6 +388,9 @@ class Gaming:
         return flag
 
     def lose(self, surface):
+        """
+        失败动画
+        """
         clock = pygame.time.Clock()
         cnt = 0
         while True:
@@ -369,6 +416,9 @@ class Gaming:
         return "Home"
 
     def ready(self):
+        """
+        游戏开始时的红字动画与音效
+        """
         if self.counter == 20:
             pygame.mixer.music.load(os.path.join(self.project_path, "audio", "ready", "Ready.mp3"))
             pygame.mixer.music.play()
@@ -405,6 +455,7 @@ class Gaming:
             self.ready()
             return flag
         mouse_x, mouse_y = pygame.mouse.get_pos()
+        #处理可能发生的鼠标点击事件
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.state == "Win":

@@ -6,6 +6,9 @@ from .Gaming import Gaming
 
 
 class Controller:
+    """
+    根据flag的值，调用不同的模块，功能类似于FSM
+    """
     def __init__(self, project_path, screen, flag):
         self.project_path = project_path
         self.screen = screen

@@ -4,6 +4,9 @@ import pygame
 
 
 class Home:
+    """
+    主界面，用户可以通过点击实现2种行为，开始游戏，或退出游戏
+    """
     def __init__(self, screen, project_path):
         self.screen = screen
         self.project_path = project_path

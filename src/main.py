@@ -32,8 +32,8 @@ while True:
             pygame.quit()
             sys.exit()
 
-    mouse_x, mouse_y = pygame.mouse.get_pos()
-    print(f"鼠标位置: ({mouse_x}, {mouse_y})")
+    # mouse_x, mouse_y = pygame.mouse.get_pos()
+    # print(f"鼠标位置: ({mouse_x}, {mouse_y})")
 
     screen.fill((0, 0, 0))
     controller.run(events)
