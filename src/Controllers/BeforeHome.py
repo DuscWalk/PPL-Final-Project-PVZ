@@ -43,7 +43,7 @@ class Fade:
         self.change_alpha()
         self.draw()
         if not self.is_running():
-            flag = 'Loading'
+            flag = "Loading"
         return flag
 
 
@@ -56,9 +56,9 @@ class Loading:
         self.counter = 0
         self.img_no = 1
         self.bar_images = {}
-        self.scene = pygame.image.load(os.path.join(project_path,'image\\init\\load_scene.png')).convert_alpha()
+        self.scene = pygame.image.load(os.path.join(project_path,"image", "init", "load_scene.png")).convert_alpha()
         for i in range(1, 41):
-            self.bar_images[i] = pygame.image.load(os.path.join(project_path,f'image\\init\loadbar\\{i}.png')).convert_alpha()
+            self.bar_images[i] = pygame.image.load(os.path.join(project_path,"image", "init\loadbar", f"{i}.png")).convert_alpha()
 
     def add(self):
         self.counter += 10
@@ -77,7 +77,7 @@ class Loading:
         self.draw()
         self.add()
         if not self.is_running():
-            flag = 'Ready to Enter'
+            flag = "Ready to Enter"
         return flag
 
 
@@ -87,8 +87,8 @@ class Ready2Enter:
         self.running = True
         self.screen = screen
         self.project_path = project_path
-        self.scene_nonact = pygame.image.load(os.path.join(project_path,'image\\init\\ready2enter.png')).convert_alpha()
-        self.scene_act = pygame.image.load(os.path.join(project_path,'image\\init\\ready2enter_act.png')).convert_alpha()
+        self.scene_nonact = pygame.image.load(os.path.join(project_path,"image", "init", "ready2enter.png")).convert_alpha()
+        self.scene_act = pygame.image.load(os.path.join(project_path,"image", "init", "ready2enter_act.png")).convert_alpha()
 
     def run(self, flag, events):
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -96,8 +96,8 @@ class Ready2Enter:
             self.screen.blit(self.scene_act, (0, 0))
             for event in events:
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    flag = 'Home'
-                    pygame.mixer.Sound(os.path.join(self.project_path,'audio\\click\\enter.ogg')).play()
+                    flag = "Home"
+                    pygame.mixer.Sound(os.path.join(self.project_path,"audio", "click", "enter.ogg")).play()
         else:
             self.screen.blit(self.scene_nonact, (0, 0))
         return flag

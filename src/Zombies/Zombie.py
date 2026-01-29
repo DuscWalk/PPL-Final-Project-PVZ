@@ -14,22 +14,22 @@ class Zombie:
         self.line = line
         self.image_walk = {}
         self.image_eat = {}
-        self.state = 'walk'
+        self.state = "walk"
         self.counter = 0
         for i in range(1, 6):
-            self.image_walk[i] = pygame.image.load(os.path.join(project_path, f'image\\Zombies\\walk\\zombie_move{i}.png')).convert_alpha()
+            self.image_walk[i] = pygame.image.load(os.path.join(project_path, "image", "Zombies", "walk", f"zombie_move{i}.png")).convert_alpha()
         for i in range(1, 8):
-            self.image_eat[i] = pygame.image.load(os.path.join(project_path, f'image\\Zombies\\eat\\zombie_eat{i}.png')).convert_alpha()
+            self.image_eat[i] = pygame.image.load(os.path.join(project_path, "image", "Zombies", "eat", f"zombie_eat{i}.png")).convert_alpha()
         self.cur_image = self.image_walk[1]
         self.eating_obj = None
 
     def eat(self, plant):
-        self.state = 'eat'
+        self.state = "eat"
         self.counter = 0
         self.eating_obj = plant
 
     def walk(self):
-        self.state = 'walk'
+        self.state = "walk"
         self.counter = 0
         self.eating_obj = None
 

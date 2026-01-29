@@ -1,20 +1,26 @@
-import sys
-
-from Controller import *
+from Controllers.Controller import *
 import pygame
 import os
+import sys
 
 
-project_path = "D:\\!NJU\\ppl\\final_project"
+# 获取项目路径
+if getattr(sys, "frozen", False):
+    # PyInstaller EXE
+    project_path = sys._MEIPASS
+else:
+    # Python 开发阶段
+    project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
 pygame.mixer.pre_init(frequency=22050, size=-16, channels=2, buffer=512)
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
-pygame.display.set_caption('Plants vs Zombies')
+pygame.display.set_caption("Plants vs Zombies")
 
 
-flag = 'Show Author'
-pygame.mixer.music.load(os.path.join(project_path, 'audio\\home.mp3'))
+flag = "Show Author"
+pygame.mixer.music.load(os.path.join(project_path, "audio", "home.mp3"))
 pygame.mixer.music.play(-1)
 
 controller = Controller(project_path, screen, flag)

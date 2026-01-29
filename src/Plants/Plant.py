@@ -26,7 +26,7 @@ class Plant:
 class Peashooter(Plant):
     def __init__(self, project_path, screen, hp, atk, x, y, consumption, line):
         super().__init__(project_path, screen, hp, atk, x, y, consumption, line)
-        self.image = pygame.image.load(os.path.join(project_path, "image\\Plants\\peashooter.png"))
+        self.image = pygame.image.load(os.path.join(project_path, "image", "Plants", "peashooter.png"))
         self.bullets = []
         self.frequency = 100
         self.shooting = False
@@ -47,24 +47,24 @@ class Bullet:
         self.y = y
         self.line = line
         self.speed = speed
-        self.state = 'flying'
+        self.state = "flying"
         self.is_alive = True
         self.counter = 0
-        self.image = pygame.image.load(os.path.join(project_path, "image\\Plants\\bullets.png"))
-        self.image_splat = pygame.image.load(os.path.join(project_path, "image\\Plants\\splats.png"))
+        self.image = pygame.image.load(os.path.join(project_path, "image", "Plants", "bullets.png"))
+        self.image_splat = pygame.image.load(os.path.join(project_path, "image", "Plants", "splats.png"))
 
     def move(self):
         self.x += self.speed
 
     def splat(self):
-        self.state = 'splat'
+        self.state = "splat"
         self.counter = 0
 
     def alive(self):
         return self.is_alive
 
     def draw(self):
-        if self.state == 'flying':
+        if self.state == "flying":
             self.screen.blit(self.image, (self.x, self.y))
         else:
             self.screen.blit(self.image_splat, (self.x, self.y))
@@ -78,7 +78,7 @@ class WallNut(Plant):
         self.original_hp = hp
         self.image = {}
         for i in range(1, 4):
-            self.image[i] = pygame.image.load(os.path.join(project_path, f'image\\Plants\\wallnut_{i}.png'))
+            self.image[i] = pygame.image.load(os.path.join(project_path, "image", "Plants", f"wallnut_{i}.png"))
 
     def draw(self):
         if self.hp <= 0:
@@ -90,7 +90,7 @@ class WallNut(Plant):
 class SunFlower(Plant):
     def __init__(self, project_path, screen, hp, atk, x, y, consumption, line):
         super().__init__(project_path, screen, hp, atk, x, y, consumption, line)
-        self.image = pygame.image.load(os.path.join(project_path, "image\\Plants\\sunflower.png"))
+        self.image = pygame.image.load(os.path.join(project_path, "image", "Plants", "sunflower.png"))
 
     def draw(self):
         self.screen.blit(self.image, (self.x, self.y))
@@ -106,7 +106,7 @@ class Sunshine:
         self.target_y = target_y
         self.speed = speed
         self.counter = 0
-        self.image = pygame.image.load(os.path.join(project_path, "image\\Plants\\sun.png"))
+        self.image = pygame.image.load(os.path.join(project_path, "image", "Plants", "sun.png"))
 
     def move(self):
         dx = self.target_x - self.x
